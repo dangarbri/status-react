@@ -451,8 +451,7 @@ class TestPublicChatMultipleDevice(MultipleDeviceTestCase):
         profile_1.sync_settings_button.click()
         profile_1.sync_history_for_button.click()
         profile_1.element_by_translation_id("two-minutes").click()
-        home_1.home_button.click()
-        home_2.home_button.click()
+        [home.home_button.click() for home in (home_1, home_2)]
 
         home_1.just_fyi("Creating 1-1 chat and sending message from device 1")
         one_to_one_chat_1 = home_1.add_contact(public_key_2)
@@ -491,19 +490,19 @@ class TestPublicChatMultipleDevice(MultipleDeviceTestCase):
 
         home_1.just_fyi("Checking gap in public chat and fetching messages")
         if pub_chat_1.chat_element_by_text(message_1).is_element_displayed(10):
-            device_1.driver.fail("Test message has been fetched automatically")
+            self.errors.append("Test message has been fetched automatically")
         pub_chat_1.element_by_translation_id("fetch-messages").wait_and_click(60)
-        if not pub_chat_1.chat_element_by_text(message_1).is_element_displayed():
-            device_1.driver.fail("Test message has not been fetched")
+        if not pub_chat_1.chat_element_by_text(message_1).is_element_displayed(10):
+            self.errors.append("Test message has not been fetched")
         home_1.get_back_to_home_view()
 
         home_1.just_fyi("Checking that there is no gap in 1-1 chat and messages fetched automatically")
         home_1.get_chat(username_2).click()
-        if not one_to_one_chat_1.chat_element_by_text(message_2):
-            device_1.driver.fail("Message in 1-1 chat has not been fetched automatically")
+        if not one_to_one_chat_1.chat_element_by_text(message_2).is_element_displayed(10):
+            self.errors.append("Message in 1-1 chat has not been fetched automatically")
         home_1.get_back_to_home_view()
 
         home_1.just_fyi("Checking that there is no gap in group chat and messages fetched automatically")
         home_2.get_chat(group_chat_name).click()
-        if not group_chat_1.chat_element_by_text(message_2):
-            device_1.driver.fail("Message in group chat has not been fetched automatically")
+        if not group_chat_1.chat_element_by_text(message_2).is_element_displayed(10):
+            self.errors.append("Message in group chat has not been fetched automatically")
