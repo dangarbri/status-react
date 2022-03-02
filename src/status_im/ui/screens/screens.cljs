@@ -36,7 +36,7 @@
             [status-im.ui.screens.communities.members :as members]
             [status-im.ui.screens.communities.membership :as membership]
             [status-im.ui.screens.communities.profile :as community.profile]
-            [status-im.ui.screens.communities.reorder-categories :as reorder-categories]
+            [status-im.ui.screens.communities.reorder :as reorder]
             [status-im.ui.screens.communities.requests-to-join :as requests-to-join]
             [status-im.ui.screens.communities.select-category :as select-category]
             [status-im.ui.screens.communities.views :as communities]
@@ -292,7 +292,7 @@
            {:name      :community-reorder-categories
             :insets    {:top false}
             :options   {:topBar {:visible false}}
-            :component reorder-categories/view}
+            :component reorder/view}
            {:name      :community-channel-details
             :insets    {:top false}
             ;;TODO custom
